@@ -11,7 +11,6 @@ void initSensor() {
     while (1)
       ;
   } else {
-    // 打印初始化成功信息
     Serial.println("SHT31 传感器初始化成功！");
   }
 }
