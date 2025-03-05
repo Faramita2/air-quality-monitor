@@ -1,5 +1,4 @@
 #include "st7796_test.h"
-#include <Arduino.h>
 #include <SPI.h>
 
 void initST7796(TFT_eSPI &tft) {

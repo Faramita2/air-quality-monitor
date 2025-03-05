@@ -1,5 +1,4 @@
 #include "sht31_test.h"
-#include <Arduino.h>
 
 void sht31_test() {
   Serial.println("Reading data from sht31...");

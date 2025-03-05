@@ -5,6 +5,6 @@
 #define SDA_PIN 18
 #define SCL_PIN 19
 
-void initI2C();
+bool initI2C();
 
 #endif

@@ -1,22 +1,22 @@
-#include "i2c_config.h"
-#include "sensor.h"
-#include "sht31_test.h"
-#include "st7796_test.h"
+#include "SystemManager.h"
 #include <Arduino.h>
-#include <TFT_eSPI.h>
 
-TFT_eSPI tft = TFT_eSPI();
+void lvgl_task(void *pvParameters) {
+  while (1) {
+    lv_timer_handler();           // 处理 LVGL 事件
+    vTaskDelay(pdMS_TO_TICKS(5)); // 每 5ms 调用一次
+  }
+}
+
+SystemManager &systemManager = SystemManager::getInstance();
+
 void setup() {
-  Serial.begin(115200);
-
-  initI2C();
-
-  initSensors();
-
-  initST7796(tft);
-  displayTest(tft);
+  systemManager.init();
+  xTaskCreatePinnedToCore(lvgl_task, "LVGL Task", 8 * 1024, NULL, 1, NULL, 1);
 }
 
 void loop() {
-  sht31_test();
+  systemManager.update();
+
+  delay(5000);
 }

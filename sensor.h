@@ -1,7 +1,7 @@
 #ifndef SENSOR_H
 #define SENSOR_H
 
-void initSensors();
+bool initSensors();
 float readTemperature();
 float readHumidity();
 
