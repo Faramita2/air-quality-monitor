@@ -4,7 +4,7 @@ TFT_eSPI tft = TFT_eSPI();
 
 // LVGL 刷新缓冲区大小
 static lv_disp_draw_buf_t draw_buf;
-static lv_color_t buf[480 * 10]; // 缓冲区大小为屏幕宽度 × 10 行
+static lv_color_t buf[480 * 20]; // 缓冲区大小为屏幕宽度 × 20 行
 
 // LVGL 显示刷新回调函数
 void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area,
@@ -23,13 +23,13 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area,
 bool initialize_display() {
   // 初始化 TFT 屏幕
   tft.init();
-  tft.setRotation(1);
+  tft.setRotation(0);
   tft.fillScreen(TFT_BLACK);
 
   lv_init();
 
   // 初始化显示缓冲区
-  lv_disp_draw_buf_init(&draw_buf, buf, NULL, 480 * 10);
+  lv_disp_draw_buf_init(&draw_buf, buf, NULL, 480 * 20);
 
   // 初始化显示驱动
   static lv_disp_drv_t disp_drv;

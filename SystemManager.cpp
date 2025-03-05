@@ -12,6 +12,10 @@ SystemManager &SystemManager::getInstance() {
 
 void SystemManager::init() {
   Serial.begin(115200);
+  delay(1000);
+
+  Serial.println("");
+  Serial.println("----------------------------------------------------------");
   Serial.println("Initializing system...");
 
   //   lv_obj_t *progressBar = lv_bar_create(lv_scr_act());
@@ -48,12 +52,16 @@ void SystemManager::init() {
 
   sensorDisplay.showWelcomeMessage();
   Serial.println("System ready.");
+  Serial.println("----------------------------------------------------------");
+  Serial.println("");
   delay(2000);
 
   //   lv_obj_del(progressBar);
 }
 
-void SystemManager::update() { sensorDisplay.update(); }
+void SystemManager::update() {
+  sensorDisplay.update();
+}
 
 SystemManager::SystemManager() {}
 
