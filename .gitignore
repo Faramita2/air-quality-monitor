@@ -1,0 +1,118 @@
+# ===============================
+# 忽略编译和构建生成的文件
+# ===============================
+# 编译输出目录
+/build/
+/out/
+/build-*/
+/output/
+
+# 编译中间文件
+*.elf
+*.bin
+*.map
+*.d
+
+# PlatformIO 构建目录
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# Arduino IDE 构建目录
+.arduino*
+
+# ===============================
+# 忽略 IDE 和编辑器的配置文件
+# ===============================
+# VSCode 配置文件
+.vscode/
+*.code-workspace
+
+# CLion 配置文件
+.idea/
+*.iml
+
+# Eclipse 配置文件
+.project
+.cproject
+.settings/
+
+# Arduino IDE 配置文件
+.arduino15/
+
+# PlatformIO 配置文件
+platformio.ini.bak
+
+# ===============================
+# 忽略操作系统生成的文件
+# ===============================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.*.swp
+.*.swo
+.*.swn
+
+# ===============================
+# 忽略日志和临时文件
+# ===============================
+# 日志文件
+*.log
+*.txt
+*.csv
+
+# 临时文件
+*.tmp
+*.temp
+*.bak
+
+# ===============================
+# 忽略第三方库和依赖
+# ===============================
+# SPIFFS 文件系统镜像
+/spiffs_image/
+
+# 下载的库
+/libraries/
+/components/
+
+# ===============================
+# 忽略用户特定文件
+# ===============================
+# 用户配置文件
+sdkconfig
+sdkconfig.old
+
+# 私钥和敏感信息
+*.key
+*.pem
+*.crt
+.env
+secrets.*
+
+# ===============================
+# 其他需要忽略的内容
+# ===============================
+# 大型二进制文件
+*.zip
+*.tar.gz
+*.7z
+
+# 测试生成的文件
+/test_output/
+/tests/results/
+
+# 自定义忽略规则
+# 如果有特定文件或目录需要忽略，可以在这里添加
