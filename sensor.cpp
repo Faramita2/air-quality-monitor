@@ -4,7 +4,7 @@
 
 Adafruit_SHT31 sht31;
 
-void initSensor() {
+void initSensors() {
   Wire.begin();
   if (!sht31.begin(0x44)) {
     Serial.println("无法找到 SHT31 传感器，请检查连接！");

@@ -11,10 +11,12 @@ void setup() {
 
   initI2C();
 
-  initSensor();
+  initSensors();
 
   initST7796(tft);
   displayTest(tft);
 }
 
-void loop() { sht31_test(); }
+void loop() {
+  sht31_test();
+}
