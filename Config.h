@@ -22,5 +22,6 @@ extern const char *WIFI_PASSWORD;
 // ThingSpeak 配置
 extern const char *THINGSPEAK_SERVER_URL;
 extern const char *THINGSPEAK_WRITE_API_KEY;
+extern const char *THINGSPEAK_READ_API_KEY;
 
 #endif

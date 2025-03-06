@@ -1,0 +1,12 @@
+// Config.cpp
+
+#include "Config.h"
+
+// WiFi 配置
+const char *WIFI_SSID = "YOUR WIFI NAME";
+const char *WIFI_PASSWORD = "YOUR WIFI PASSWORD";
+
+// ThingSpeak 配置
+const char *THINGSPEAK_SERVER_URL = "http://api.thingspeak.com/update";
+const char *THINGSPEAK_WRITE_API_KEY = "YOUR THINGSPEAK WRITE API KEY";
+const char *THINGSPEAK_READ_API_KEY = "YOUR THINGSPEAK READ API KEY";
