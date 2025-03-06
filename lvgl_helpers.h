@@ -1,8 +1,10 @@
+// lvgl_helpers.h
+
 #ifndef LVGL_HELPERS_H
 #define LVGL_HELPERS_H
 
-#include <lvgl.h>
 #include <cstdio>
+#include <lvgl.h>
 
 void display_text(const char *text, int x, int y, lv_color_t color);
 
