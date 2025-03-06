@@ -23,7 +23,7 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area,
 bool initialize_display() {
   // 初始化 TFT 屏幕
   tft.init();
-  tft.setRotation(0);
+  tft.setRotation(1);
   tft.fillScreen(TFT_BLACK);
 
   lv_init();
