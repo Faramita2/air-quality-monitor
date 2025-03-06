@@ -14,6 +14,7 @@ SystemManager &systemManager = SystemManager::getInstance();
 
 void setup() {
   systemManager.init();
+  Serial.printf("Setup: Free Heap = %d bytes\n", ESP.getFreeHeap());
   xTaskCreatePinnedToCore(lvgl_task, "LVGL Task", 8 * 1024, NULL, 1, NULL, 1);
 }
 

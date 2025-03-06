@@ -18,18 +18,16 @@ bool DataUploader::init() {
 }
 
 bool DataUploader::upload(float temperature, float humidity) {
-  // 检查 WiFi 是否连接
   if (WiFi.status() != WL_CONNECTED) {
     Serial.println("WiFi is disconnected, cannot upload data.");
     return false;
   }
 
-  HTTPClient http;
+  char url[128];
+  snprintf(url, sizeof(url), "%s?api_key=%s&field1=%.2f&field2=%.2f",
+           _serverUrl, _apiKey, temperature, humidity);
 
-  String url = _serverUrl;
-  url += "?api_key=" + String(_apiKey);
-  url += "&field1=" + String(temperature);
-  url += "&field2=" + String(humidity);
+  Serial.printf("Before HTTP: Free Heap = %d bytes\n", ESP.getFreeHeap());
 
   http.begin(url);
   int httpResponseCode = http.GET();
@@ -40,20 +38,25 @@ bool DataUploader::upload(float temperature, float humidity) {
     String response = http.getString();
     Serial.printf("Server Response: %s\n", response.c_str());
 
-    if (httpResponseCode == 200) { // ThingSpeak 成功写入时通常返回 "0"
+    if (httpResponseCode == 200) {
       Serial.println("Data uploaded successfully.");
       http.end();
+      Serial.printf("After HTTP: Free Heap = %d bytes\n", ESP.getFreeHeap());
       return true;
     } else {
       Serial.println(
           "Data upload failed. Check the server response for details.");
       http.end();
+
+      Serial.printf("After HTTP: Free Heap = %d bytes\n", ESP.getFreeHeap());
       return false;
     }
   } else {
     Serial.printf("HTTP GET request failed, error code: %d\n",
                   httpResponseCode);
     http.end();
+
+    Serial.printf("After HTTP: Free Heap = %d bytes\n", ESP.getFreeHeap());
     return false;
   }
 }

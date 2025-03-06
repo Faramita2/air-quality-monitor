@@ -22,6 +22,7 @@ private:
 
   const char *_serverUrl;
   const char *_apiKey;
+  HTTPClient http;
 };
 
 #endif
