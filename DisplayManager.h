@@ -11,7 +11,7 @@ class DisplayManager {
 public:
   static DisplayManager &getInstance();
   bool init();
-  void update(float temperature, float humidity);
+  void update(float temperature, float humidity, float co2, float tvoc);
   void showWelcomeMessage();
   TFT_eSPI &getTFT();
 

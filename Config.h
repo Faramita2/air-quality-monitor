@@ -4,7 +4,7 @@
 #define CONFIG_H
 
 // debug ?
-#define APP_DEBUG_MODE 0
+#define APP_DEBUG_MODE 1
 
 // dev: 40s
 #define UPLOAD_TIME_GAP 40 * 1000

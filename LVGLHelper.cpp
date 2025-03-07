@@ -43,7 +43,8 @@ bool LVGLHelper::init(TFT_eSPI &tft) {
   return true;
 }
 
-void LVGLHelper::updateSensorData(float temperature, float humidity) {
+void LVGLHelper::updateSensorData(float temperature, float humidity, float co2,
+                                  float tvoc) {
   if (!tempLabel) {
     tempLabel = lv_label_create(lv_scr_act());
     lv_obj_align(tempLabel, LV_ALIGN_TOP_LEFT, 10, 10);
@@ -51,6 +52,14 @@ void LVGLHelper::updateSensorData(float temperature, float humidity) {
   if (!humidityLabel) {
     humidityLabel = lv_label_create(lv_scr_act());
     lv_obj_align(humidityLabel, LV_ALIGN_TOP_LEFT, 10, 50);
+  }
+  if (!co2Label) {
+    co2Label = lv_label_create(lv_scr_act());
+    lv_obj_align(co2Label, LV_ALIGN_TOP_LEFT, 10, 90);
+  }
+  if (!tvocLabel) {
+    tvocLabel = lv_label_create(lv_scr_act());
+    lv_obj_align(tvocLabel, LV_ALIGN_TOP_LEFT, 10, 130);
   }
 
   char tempBuffer[50];
@@ -60,7 +69,28 @@ void LVGLHelper::updateSensorData(float temperature, float humidity) {
   char humidityBuffer[50];
   snprintf(humidityBuffer, sizeof(humidityBuffer), "Humidity: %.2f%%",
            humidity);
+
+  char co2Buffer[50];
+  if (co2 == -1) {
+    snprintf(co2Buffer, sizeof(co2Buffer), "CO2: N/A");
+  } else {
+    snprintf(co2Buffer, sizeof(co2Buffer), "CO2: %.2fppm", co2);
+  }
+
+  char tvocBuffer[50];
+  if (tvoc == -1) {
+    snprintf(tvocBuffer, sizeof(tvocBuffer), "TVOC: N/A");
+  } else {
+    snprintf(tvocBuffer, sizeof(tvocBuffer), "TVOC: %.2fppb", tvoc);
+  }
+
+  lv_label_set_text(tempLabel, tempBuffer);
+
   lv_label_set_text(humidityLabel, humidityBuffer);
+
+  lv_label_set_text(co2Label, co2Buffer);
+
+  lv_label_set_text(tvocLabel, tvocBuffer);
 }
 
 void LVGLHelper::displayText(const char *text, int x, int y, lv_color_t color) {

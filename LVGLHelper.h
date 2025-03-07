@@ -14,13 +14,16 @@ public:
 
   bool init(TFT_eSPI &tft);
 
-  void updateSensorData(float temperature, float humidity);
+  void updateSensorData(float temperature, float humidity, float co2,
+                        float tvoc);
 
   void displayText(const char *text, int x, int y, lv_color_t color);
 
 private:
   lv_obj_t *tempLabel = nullptr;
   lv_obj_t *humidityLabel = nullptr;
+  lv_obj_t *co2Label = nullptr;
+  lv_obj_t *tvocLabel = nullptr;
 };
 
 #endif

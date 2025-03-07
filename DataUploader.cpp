@@ -17,15 +17,17 @@ bool DataUploader::init() {
   return true;
 }
 
-bool DataUploader::upload(float temperature, float humidity) {
+bool DataUploader::upload(float temperature, float humidity, float co2,
+                          float tvoc) {
   if (WiFi.status() != WL_CONNECTED) {
     Serial.println("WiFi is disconnected, cannot upload data.");
     return false;
   }
 
-  char url[128];
-  snprintf(url, sizeof(url), "%s?api_key=%s&field1=%.2f&field2=%.2f",
-           _serverUrl, _apiKey, temperature, humidity);
+  char url[256];
+  snprintf(url, sizeof(url),
+           "%s?api_key=%s&field1=%.2f&field2=%.2f&field3=%.2f&field4=%.2f",
+           _serverUrl, _apiKey, temperature, humidity, co2, tvoc);
 
   Serial.printf("Before HTTP: Free Heap = %d bytes\n", ESP.getFreeHeap());
 

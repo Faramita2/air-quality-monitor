@@ -23,6 +23,28 @@ bool SensorManager::init() {
     Serial.println("SHT31 initialized.");
   }
 
+  Serial.println("Initializing CCS811...");
+  int attempts = 0;
+  while (!ccs811.begin(0x5B) && attempts < 5) {
+    Serial.println("CCS811 initialization failed, retrying...");
+    delay(1000);
+    attempts++;
+  }
+
+  if (attempts >= 5) {
+    Serial.println("Initialization failed: cannot find CCS811 sensor, check "
+                   "connection please!");
+    return false;
+  } else {
+    Serial.println("Waiting CCS811 to be ready...");
+
+    while (!ccs811.available())
+      ;
+    Serial.println("CCS811 is ready...");
+
+    Serial.println("CCS811 initialized.");
+  }
+
   // if (!co2Sensor.begin()) {
   //     Serial.println("Initialization failed: cannot find CO2 sensor, check
   //     connection please!"); return false;
@@ -53,10 +75,26 @@ float SensorManager::readHumidity() {
   return humidity;
 }
 
-// float SensorManager::readCO2() {
-//     float co2 = co2Sensor.read();
-//     Serial.print("CO2: ");
-//     Serial.print(co2, 2);
-//     Serial.println("ppm");
-//     return co2;
-// }
+bool SensorManager::readCO2AndTVOC(float &co2, float &tvoc) {
+  if (ccs811.available()) {
+    if (!ccs811.readData()) {
+      co2 = ccs811.geteCO2();
+      tvoc = ccs811.getTVOC();
+      if (APP_DEBUG_MODE) {
+        Serial.print("CO2: ");
+        Serial.print(co2, 2);
+        Serial.println("ppm");
+        Serial.print("TVOC: ");
+        Serial.print(tvoc, 2);
+        Serial.println("ppb");
+      }
+      return true;
+    } else {
+      Serial.println("ERROR! CSS811 cannot read data.");
+      return false;
+    }
+  } else {
+    Serial.println("CCS811 data not available.");
+    return false;
+  }
+}

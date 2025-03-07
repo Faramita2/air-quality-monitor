@@ -11,7 +11,7 @@ class DataUploader {
 public:
   static DataUploader &getInstance();
   bool init();
-  bool upload(float temperature, float humidity);
+  bool upload(float temperature, float humidity, float co2, float tvoc);
 
 private:
   DataUploader();

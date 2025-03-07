@@ -11,7 +11,7 @@ DisplayManager::~DisplayManager() {}
 
 bool DisplayManager::init() {
   tft.init();
-  tft.setRotation(1);
+  tft.setRotation(3);
   tft.fillScreen(TFT_BLACK);
 
   lvglHelper.init(getTFT());
@@ -19,8 +19,9 @@ bool DisplayManager::init() {
   return true;
 }
 
-void DisplayManager::update(float temperature, float humidity) {
-  lvglHelper.updateSensorData(temperature, humidity);
+void DisplayManager::update(float temperature, float humidity, float co2,
+                            float tvoc) {
+  lvglHelper.updateSensorData(temperature, humidity, co2, tvoc);
 }
 
 void DisplayManager::showWelcomeMessage() {

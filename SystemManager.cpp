@@ -70,6 +70,24 @@ void SystemManager::update() {
 
   float temperature = sensorManager.readTemperature();
   float humidity = sensorManager.readHumidity();
+  float co2 = -1, tvoc = -1;
+  sensorManager.readCO2AndTVOC(co2, tvoc);
+
+  if (APP_DEBUG_MODE) {
+    Serial.println(
+        "----------------------------------------------------------");
+    Serial.print("System Update: Temperature = ");
+    Serial.print(temperature, 2);
+    Serial.print("°C, Humidity = ");
+    Serial.print(humidity, 2);
+    Serial.print("%, CO2 = ");
+    Serial.print(co2, 2);
+    Serial.print("ppm, TVOC = ");
+    Serial.print(tvoc, 2);
+    Serial.println("ppb");
+    Serial.println(
+        "----------------------------------------------------------");
+  }
 
   if (currentTime - lastUploadTime >= UPLOAD_TIME_GAP) {
     lastUploadTime = currentTime;
@@ -79,8 +97,8 @@ void SystemManager::update() {
       wifiManager.connect();
     }
 
-    dataUploader.upload(temperature, humidity);
+    dataUploader.upload(temperature, humidity, co2, tvoc);
   }
 
-  displayManager.update(temperature, humidity);
+  displayManager.update(temperature, humidity, co2, tvoc);
 }
