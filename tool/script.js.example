@@ -1,6 +1,6 @@
 const THINGSPEAK_CHANNEL_ID = 'YOUR CHANNEL ID';
 const THINGSPEAK_WRITE_API_KEY = 'YOUR WRITE API KEY';
-const USE_TEST_FIELDS = true;
+let isTestEnvironment = true;
 
 let pendingRequest = null;
 let lastSubmitTime = 0;
@@ -13,6 +13,29 @@ const backgroundImages = [
     'images/bg4.png',
     'images/bg5.png'
 ];
+
+envSwitchButton.addEventListener('click', () => {
+    isTestEnvironment = !isTestEnvironment;
+    updateEnvButtonText();
+});
+
+updateEnvButtonText();
+
+function getFieldName(fieldType) {
+    return isTestEnvironment ? `field${fieldType + 2}` : `field${fieldType}`;
+}
+
+function updateEnvButtonText() {
+    if (isTestEnvironment) {
+        envSwitchButton.textContent = 'Test Environment';
+        envSwitchButton.classList.remove('prod-env');
+        envSwitchButton.classList.add('test-env');
+    } else {
+        envSwitchButton.textContent = 'Production Environment';
+        envSwitchButton.classList.remove('test-env');
+        envSwitchButton.classList.add('prod-env');
+    }
+}
 
 function setRandomBackground() {
     const randomIndex = Math.floor(Math.random() * backgroundImages.length);
@@ -76,11 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let url = `https://api.thingspeak.com/update?api_key=${THINGSPEAK_WRITE_API_KEY}`;
         if (sneezes > 0) {
-            const fieldSneezes = USE_TEST_FIELDS ? 'field7' : 'field5';
+            const fieldSneezes = getFieldName(5);
             url += `&${fieldSneezes}=${sneezes}`;
         }
         if (runnyNose > 0) {
-            const fieldRunnyNose = USE_TEST_FIELDS ? 'field8' : 'field6';
+            const fieldRunnyNose = getFieldName(6);
             url += `&${fieldRunnyNose}=${runnyNose}`;
         }
 
