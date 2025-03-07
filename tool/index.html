@@ -14,6 +14,7 @@
         <div class="skin-switch-container text-center mb-4">
             <button id="skinSwitchButton" class="btn-modern-warning">Switch to Default Style</button>
             <button id="envSwitchButton" class="btn-modern-primary ms-3">Test Environment</button>
+            <button id="configButton" class="btn-modern-primary ms-3">⚙️ Configure</button>
         </div>
 
         <div class="card mx-auto">
@@ -30,6 +31,39 @@
             <div id="response" class="mt-3 text-center"></div>
             <div class="text-center mt-3">
                 <button id="retryButton" class="btn-modern-warning d-none">Retry</button>
+            </div>
+            <div id="instructions" class="mt-4 text-center">
+                <p>Instructions: Enter the number of sneezes or click "Submit Runny Nose" to record events. Data is sent
+                    to ThingSpeak.</p>
+            </div>
+        </div>
+
+        <div class="modal fade" id="configModal" tabindex="-1" aria-labelledby="configModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="configModalLabel">ThingSpeak Configuration</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="writeApiKey" class="form-label">Write API Key</label>
+                            <input type="text" class="form-control" id="writeApiKey" placeholder="Enter Write API Key">
+                        </div>
+                        <div class="mb-3">
+                            <label for="readApiKey" class="form-label">Read API Key (Optional)</label>
+                            <input type="text" class="form-control" id="readApiKey" placeholder="Enter Read API Key">
+                        </div>
+                        <div class="mb-3">
+                            <label for="channelId" class="form-label">Channel ID (Optional)</label>
+                            <input type="text" class="form-control" id="channelId" placeholder="Enter Channel ID">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="saveConfigButton">Save</button>
+                    </div>
+                </div>
             </div>
         </div>
 

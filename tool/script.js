@@ -1,5 +1,3 @@
-const THINGSPEAK_CHANNEL_ID = 'YOUR CHANNEL ID';
-const THINGSPEAK_WRITE_API_KEY = 'YOUR WRITE API KEY';
 let isTestEnvironment = true;
 
 let pendingRequest = null;
@@ -14,61 +12,93 @@ const backgroundImages = [
     'images/bg5.png'
 ];
 
-envSwitchButton.addEventListener('click', () => {
-    isTestEnvironment = !isTestEnvironment;
-    updateEnvButtonText();
-});
-
-updateEnvButtonText();
-
-function getFieldName(fieldType) {
-    return isTestEnvironment ? `field${fieldType + 2}` : `field${fieldType}`;
-}
-
-function updateEnvButtonText() {
-    if (isTestEnvironment) {
-        envSwitchButton.textContent = 'Test Environment';
-        envSwitchButton.classList.remove('prod-env');
-        envSwitchButton.classList.add('test-env');
-    } else {
-        envSwitchButton.textContent = 'Production Environment';
-        envSwitchButton.classList.remove('test-env');
-        envSwitchButton.classList.add('prod-env');
-    }
-}
-
-function setRandomBackground() {
-    const randomIndex = Math.floor(Math.random() * backgroundImages.length);
-    const randomImage = backgroundImages[randomIndex];
-    document.body.style.backgroundImage = `url('${randomImage}')`;
-}
-
+let config = {
+    writeApiKey: '',
+    readApiKey: '',
+    channelId: ''
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     const skinSwitchButton = document.getElementById('skinSwitchButton');
-    const body = document.body;
-
-    body.classList.add('anime-style');
-    setRandomBackground();
-
-    skinSwitchButton.addEventListener('click', () => {
-        if (body.classList.contains('anime-style')) {
-            body.classList.remove('anime-style');
-            skinSwitchButton.textContent = 'Switch to Anime Style';
-            document.body.style.backgroundImage = '';
-        } else {
-            body.classList.add('anime-style');
-            skinSwitchButton.textContent = 'Switch to Default Style';
-            setRandomBackground();
-        }
-    });
-
+    const envSwitchButton = document.getElementById('envSwitchButton');
+    const configButton = document.getElementById('configButton');
     const sneezeButton = document.getElementById('sneezeButton');
     const runnyNoseButton = document.getElementById('runnyNoseButton');
     const sneezeInput = document.getElementById('sneezeCount');
     const responseDiv = document.getElementById('response');
     const retryButton = document.getElementById('retryButton');
     const debugModal = new bootstrap.Modal(document.getElementById('debugModal'));
+    const configModal = new bootstrap.Modal(document.getElementById('configModal'));
+    const writeApiKeyInput = document.getElementById('writeApiKey');
+    const readApiKeyInput = document.getElementById('readApiKey');
+    const channelIdInput = document.getElementById('channelId');
+    const saveConfigButton = document.getElementById('saveConfigButton');
+
+    setRandomBackground();
+
+    function setRandomBackground() {
+        const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+        const randomImage = backgroundImages[randomIndex];
+        document.body.style.backgroundImage = `url('${randomImage}')`;
+    }
+
+    skinSwitchButton.addEventListener('click', () => {
+        if (document.body.classList.contains('anime-style')) {
+            document.body.classList.remove('anime-style');
+            skinSwitchButton.textContent = 'Switch to Anime Style';
+            document.body.style.backgroundImage = '';
+        } else {
+            document.body.classList.add('anime-style');
+            skinSwitchButton.textContent = 'Switch to Default Style';
+            setRandomBackground();
+        }
+    });
+
+    envSwitchButton.addEventListener('click', () => {
+        isTestEnvironment = !isTestEnvironment;
+        updateEnvButtonText();
+    });
+
+    updateEnvButtonText();
+
+    configButton.addEventListener('click', () => {
+        writeApiKeyInput.value = config.writeApiKey;
+        readApiKeyInput.value = config.readApiKey;
+        channelIdInput.value = config.channelId;
+        configModal.show();
+    });
+
+    saveConfigButton.addEventListener('click', () => {
+        config.writeApiKey = writeApiKeyInput.value.trim();
+        config.readApiKey = readApiKeyInput.value.trim();
+        config.channelId = channelIdInput.value.trim();
+
+        if (!config.writeApiKey) {
+            alert('Write API Key is required!');
+            return;
+        }
+
+        configModal.hide();
+        updateSubmitButtonState();
+    });
+
+    function updateSubmitButtonState() {
+        if (!config.writeApiKey) {
+            sneezeButton.disabled = true;
+            runnyNoseButton.disabled = true;
+            responseDiv.innerHTML = `
+                <div class="alert alert-danger" role="alert">
+                    Please configure the Write API Key first!
+                </div>
+            `;
+        } else {
+            sneezeButton.disabled = false;
+            runnyNoseButton.disabled = false;
+            responseDiv.innerHTML = '';
+        }
+    }
+
+    updateSubmitButtonState();
 
     sneezeButton.addEventListener('click', () => {
         const sneezeCount = Math.max(parseInt(sneezeInput.value), 1);
@@ -97,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        let url = `https://api.thingspeak.com/update?api_key=${THINGSPEAK_WRITE_API_KEY}`;
+        let url = `https://api.thingspeak.com/update?api_key=${config.writeApiKey}`;
         if (sneezes > 0) {
             const fieldSneezes = getFieldName(5);
             url += `&${fieldSneezes}=${sneezes}`;
@@ -137,6 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 enableUI();
                 retryButton.classList.remove('d-none');
             });
+    }
+
+    function getFieldName(fieldType) {
+        return isTestEnvironment ? `field${fieldType + 2}` : `field${fieldType}`;
     }
 
     function updateDebugInfo(eventType, value, responseData, isError = false) {
@@ -184,5 +218,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 enableUI();
             }
         }, 1000);
+    }
+
+    function updateEnvButtonText() {
+        if (isTestEnvironment) {
+            envSwitchButton.textContent = 'Test Environment';
+            envSwitchButton.classList.remove('prod-env');
+            envSwitchButton.classList.add('test-env');
+        } else {
+            envSwitchButton.textContent = 'Production Environment';
+            envSwitchButton.classList.remove('test-env');
+            envSwitchButton.classList.add('prod-env');
+        }
     }
 });

@@ -291,3 +291,52 @@ body.anime-style #envSwitchButton.prod-env {
     border-color: #ccffcc;
     color: #ff6f61;
 }
+
+#instructions {
+    font-size: 0.85rem;
+    color: #a9a9a9;
+    background-color: rgba(248, 249, 250, 0.8);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#instructions p {
+    margin: 0;
+}
+
+body.anime-style #instructions {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-size: 0.9rem;
+    color: #a9a9a9;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 100, 150, 0.3);
+    box-shadow: none;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.anime-style #instructions p {
+    margin: 0;
+}
+
+.card {
+    max-width: 700px;
+    width: 100%;
+    padding: 40px;
+}
+
+body.anime-style .card {
+    max-width: 700px;
+    padding: 30px;
+}
