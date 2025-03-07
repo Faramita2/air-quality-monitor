@@ -38,7 +38,7 @@ bool DataUploader::upload(float temperature, float humidity) {
     String response = http.getString();
     Serial.printf("Server Response: %s\n", response.c_str());
 
-    if (httpResponseCode == 200) {
+    if (httpResponseCode == 200 && !response.equals("0")) {
       Serial.println("Data uploaded successfully.");
       http.end();
       Serial.printf("After HTTP: Free Heap = %d bytes\n", ESP.getFreeHeap());

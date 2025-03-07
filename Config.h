@@ -6,8 +6,8 @@
 // debug ?
 #define APP_DEBUG_MODE 0
 
-// dev: 20s
-#define UPLOAD_TIME_GAP 20 * 1000
+// dev: 40s
+#define UPLOAD_TIME_GAP 40 * 1000
 // prod: 5min
 // #define UPLOAD_TIME_GAP 5 * 60 * 1000
 
