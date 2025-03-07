@@ -6,7 +6,40 @@ let pendingRequest = null;
 let lastSubmitTime = 0;
 const SUBMIT_INTERVAL = 15000;
 
+const backgroundImages = [
+    'images/bg1.png',
+    'images/bg2.png',
+    'images/bg3.png',
+    'images/bg4.png',
+    'images/bg5.png'
+];
+
+function setRandomBackground() {
+    const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+    const randomImage = backgroundImages[randomIndex];
+    document.body.style.backgroundImage = `url('${randomImage}')`;
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
+    const skinSwitchButton = document.getElementById('skinSwitchButton');
+    const body = document.body;
+
+    body.classList.add('anime-style');
+    setRandomBackground();
+
+    skinSwitchButton.addEventListener('click', () => {
+        if (body.classList.contains('anime-style')) {
+            body.classList.remove('anime-style');
+            skinSwitchButton.textContent = 'Switch to Anime Style';
+            document.body.style.backgroundImage = '';
+        } else {
+            body.classList.add('anime-style');
+            skinSwitchButton.textContent = 'Switch to Default Style';
+            setRandomBackground();
+        }
+    });
+
     const sneezeButton = document.getElementById('sneezeButton');
     const runnyNoseButton = document.getElementById('runnyNoseButton');
     const sneezeInput = document.getElementById('sneezeCount');
@@ -15,9 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const debugModal = new bootstrap.Modal(document.getElementById('debugModal'));
 
     sneezeButton.addEventListener('click', () => {
-        const sneezeCount = parseInt(sneezeInput.value);
-        if (isNaN(sneezeCount) || sneezeCount < 1) {
-            showResponse('Please enter a valid number of sneezes (minimum 1).', 'danger');
+        const sneezeCount = Math.max(parseInt(sneezeInput.value), 1);
+        if (isNaN(sneezeCount)) {
+            showResponse('Please enter a valid number of sneezes.', 'danger');
             return;
         }
         sendData(sneezeCount, 0, 'Sneezing');

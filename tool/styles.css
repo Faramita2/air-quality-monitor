@@ -1,4 +1,10 @@
+/* 默认现代风格 */
 body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
 }
@@ -149,4 +155,103 @@ body {
 
 .alert {
     border-radius: 10px;
+}
+
+body.anime-style {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+}
+
+body.anime-style .fs-title {
+    color: #ffcc00;
+}
+
+body.anime-style .card {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid #ff6f61;
+    box-shadow: 0 10px 20px rgba(255, 100, 150, 0.3);
+}
+
+body.anime-style .btn-modern-primary {
+    background-color: #ff6f61;
+    border-color: #ff6f61;
+}
+
+body.anime-style .btn-modern-primary:hover {
+    background-color: #ff4d4d;
+}
+
+body.anime-style .btn-modern-primary:disabled,
+body.anime-style .btn-modern-primary.disabled {
+    background-color: #ffcccc;
+    border-color: #ffcccc;
+    color: #660000;
+    cursor: not-allowed;
+    transform: none;
+}
+
+body.anime-style .btn-modern-warning {
+    background-color: #ffffcc;
+    border-color: #ffffcc;
+    color: #666600;
+}
+
+body.anime-style .btn-modern-warning:hover {
+    background-color: #ffff99;
+}
+
+body.anime-style .btn-modern-warning:disabled,
+body.anime-style .btn-modern-warning.disabled {
+    background-color: #ffffcc;
+    border-color: #ffffcc;
+    color: #666600;
+    cursor: not-allowed;
+    transform: none;
+}
+
+body.anime-style .debug-modal {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #ff6f61;
+    box-shadow: 0 10px 20px rgba(255, 100, 150, 0.3);
+}
+
+body.anime-style .debug-modal .modal-header {
+    background-color: #fff3f3;
+    border-bottom: 1px solid #ffcccc;
+}
+
+body.anime-style .debug-modal .modal-title {
+    color: #ff6f61;
+}
+
+body.anime-style .debug-info {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: 2px solid #ff6f61;
+    box-shadow: 0 5px 15px rgba(255, 100, 150, 0.3);
+}
+
+body.anime-style .debug-info .key {
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+body.anime-style .debug-info .value {
+    color: #ff6f61;
+}
+
+body.anime-style .debug-info .error {
+    color: #ff4d4d;
+}
+
+body.anime-style .debug-info .separator {
+    border-top: 1px dashed #ffcccc;
 }
