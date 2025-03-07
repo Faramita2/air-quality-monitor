@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+.fs-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    white-space: nowrap;
+}
+
+.card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    max-width: 700px;
+    width: 100%;
+    padding: 40px;
+}
+
+.custom-label {
+    font-size: 1.1rem;
+    color: #495057;
+    font-weight: normal;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.input-group .form-control {
+    font-size: 1.1rem;
+    padding: 0.8rem 1.2rem;
+    border-radius: 10px;
+    border: 1px solid #ced4da;
+}
+
+.btn-modern-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: white;
+    font-size: 1.1rem;
+    padding: 0.8rem 2rem;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-modern-primary:hover {
+    background-color: #0b5ed7;
+    transform: scale(1.05);
+    color: white;
+}
+
+.btn-modern-primary:disabled,
+.btn-modern-primary.disabled {
+    background-color: #b3d7ff;
+    border-color: #b3d7ff;
+    color: #ffffff;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-modern-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: white;
+    font-size: 1.1rem;
+    padding: 0.8rem 2rem;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-modern-warning:hover {
+    background-color: #e0a800;
+    transform: scale(1.05);
+    color: white;
+}
+
+.btn-modern-warning:disabled,
+.btn-modern-warning.disabled {
+    background-color: #ffe680;
+    border-color: #ffe680;
+    color: #ffffff;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.debug-modal {
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    border: none;
+}
+
+.debug-modal .modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 15px 15px 0 0;
+}
+
+.debug-modal .modal-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.debug-modal .modal-body {
+    padding: 20px;
+}
+
+.debug-info {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    color: #495057;
+    background-color: #f8f9fa;
+    padding: 8px 15px;
+    border-radius: 10px;
+    border: 1px solid #ced4da;
+    overflow-x: auto;
+    white-space: pre-wrap;
+}
+
+.debug-info .key {
+    font-weight: bold;
+    color: #6c757d;
+    margin-top: 4px;
+}
+
+.debug-info .value {
+    color: #17a2b8;
+    margin-top: 4px;
+}
+
+.debug-info .error {
+    color: #dc3545;
+    margin-top: 4px;
+}
+
+.debug-info .separator {
+    margin: 6px 0;
+    border-top: 1px dashed #ccc;
+}
+
+.alert {
+    border-radius: 10px;
+}

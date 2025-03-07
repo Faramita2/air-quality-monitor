@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record Sneezing and Runny Nose Events</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-light">
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="card shadow-lg p-5" style="max-width: 700px; width: 100%;">
+            <h1 class="text-center mb-4 fs-title">Record Sneezing and Runny Nose Events</h1>
+
+            <!-- Sneezing Group -->
+            <div class="mb-4">
+                <label for="sneezeCount" class="form-label custom-label">Number of sneezes:</label>
+                <div class="input-group">
+                    <input type="number" id="sneezeCount" class="form-control" value="1" min="1">
+                    <button id="sneezeButton" class="btn btn-modern-primary">Submit</button>
+                </div>
+            </div>
+
+            <!-- Runny Nose Button -->
+            <button id="runnyNoseButton" class="btn btn-modern-primary w-100 mb-4">Submit Runny Nose</button>
+
+            <!-- Response Message -->
+            <div id="response" class="mt-4"></div>
+
+            <!-- Retry Button -->
+            <button id="retryButton" class="btn btn-modern-warning w-100 d-none">Retry</button>
+
+            <!-- Debug Modal -->
+            <div class="modal fade" id="debugModal" tabindex="-1" aria-labelledby="debugModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content debug-modal">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="debugModalLabel">Debug Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <pre id="debugInfo" class="text-start debug-info"></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+
+</html>

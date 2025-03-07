@@ -1,0 +1,132 @@
+const THINGSPEAK_CHANNEL_ID = 'YOUR CHANNEL ID';
+const THINGSPEAK_WRITE_API_KEY = 'YOUR WRITE API KEY';
+const USE_TEST_FIELDS = true;
+
+let pendingRequest = null;
+let lastSubmitTime = 0;
+const SUBMIT_INTERVAL = 15000;
+
+document.addEventListener('DOMContentLoaded', () => {
+    const sneezeButton = document.getElementById('sneezeButton');
+    const runnyNoseButton = document.getElementById('runnyNoseButton');
+    const sneezeInput = document.getElementById('sneezeCount');
+    const responseDiv = document.getElementById('response');
+    const retryButton = document.getElementById('retryButton');
+    const debugModal = new bootstrap.Modal(document.getElementById('debugModal'));
+
+    sneezeButton.addEventListener('click', () => {
+        const sneezeCount = parseInt(sneezeInput.value);
+        if (isNaN(sneezeCount) || sneezeCount < 1) {
+            showResponse('Please enter a valid number of sneezes (minimum 1).', 'danger');
+            return;
+        }
+        sendData(sneezeCount, 0, 'Sneezing');
+    });
+
+    runnyNoseButton.addEventListener('click', () => {
+        sendData(0, 1, 'Runny Nose');
+    });
+
+    retryButton.addEventListener('click', () => {
+        if (pendingRequest) {
+            sendData(pendingRequest.sneezes, pendingRequest.runnyNose, pendingRequest.eventType);
+        }
+    });
+
+    function sendData(sneezes, runnyNose, eventType) {
+        const currentTime = Date.now();
+        if (currentTime - lastSubmitTime < SUBMIT_INTERVAL) {
+            const remainingTime = Math.ceil((SUBMIT_INTERVAL - (currentTime - lastSubmitTime)) / 1000);
+            showResponse(`Please wait ${remainingTime} seconds before submitting again!`, 'danger');
+            return;
+        }
+
+        let url = `https://api.thingspeak.com/update?api_key=${THINGSPEAK_WRITE_API_KEY}`;
+        if (sneezes > 0) {
+            const fieldSneezes = USE_TEST_FIELDS ? 'field7' : 'field5';
+            url += `&${fieldSneezes}=${sneezes}`;
+        }
+        if (runnyNose > 0) {
+            const fieldRunnyNose = USE_TEST_FIELDS ? 'field8' : 'field6';
+            url += `&${fieldRunnyNose}=${runnyNose}`;
+        }
+
+        console.log('Submitting to URL:', url);
+        showResponse('Submitting data, please wait...', 'info');
+        disableUI();
+
+        pendingRequest = { sneezes, runnyNose, eventType };
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+                return response.text();
+            })
+            .then(data => {
+                console.log('API Response:', data);
+                if (data.trim() === '0') throw new Error('Submission failed: Server returned 0.');
+                showResponse('Data submitted successfully!', 'success');
+                updateDebugInfo(eventType, sneezes || runnyNose, data);
+                debugModal.show();
+                pendingRequest = null;
+                lastSubmitTime = Date.now();
+                startCountdown();
+                retryButton.classList.add('d-none');
+            })
+            .catch(error => {
+                console.error('Error:', error.message);
+                showResponse('Data submission failed!', 'danger');
+                updateDebugInfo(eventType, sneezes || runnyNose, error.message, true);
+                debugModal.show();
+                enableUI();
+                retryButton.classList.remove('d-none');
+            });
+    }
+
+    function updateDebugInfo(eventType, value, responseData, isError = false) {
+        const debugContent = `
+            <div class="key">Event Type:</div> <div class="value">${eventType}</div>
+            <div class="separator"></div>
+            <div class="key">Value Submitted:</div> <div class="value">${value}</div>
+            <div class="separator"></div>
+            <div class="key">Timestamp:</div> <div class="value">${new Date().toLocaleString()}</div>
+            <div class="separator"></div>
+            <div class="key">Response:</div> <div class="value ${isError ? 'error' : ''}">${responseData}</div>
+        `;
+        document.getElementById('debugInfo').innerHTML = debugContent;
+    }
+
+    function showResponse(message, type) {
+        responseDiv.innerHTML = `
+            <div class="alert alert-${type}" role="alert">
+                ${message}
+            </div>
+        `;
+    }
+
+    function disableUI() {
+        sneezeButton.disabled = true;
+        runnyNoseButton.disabled = true;
+        sneezeInput.disabled = true;
+    }
+
+    function enableUI() {
+        sneezeButton.disabled = false;
+        runnyNoseButton.disabled = false;
+        sneezeInput.disabled = false;
+    }
+
+    function startCountdown() {
+        let remainingTime = Math.ceil(SUBMIT_INTERVAL / 1000);
+        const countdownInterval = setInterval(() => {
+            showResponse(`Data submitted successfully! Please wait ${remainingTime} seconds before submitting again.`, 'success');
+            remainingTime--;
+
+            if (remainingTime < 0) {
+                clearInterval(countdownInterval);
+                showResponse('You can submit data again!', 'info');
+                enableUI();
+            }
+        }, 1000);
+    }
+});
