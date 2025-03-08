@@ -129,11 +129,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let url = `https://api.thingspeak.com/update?api_key=${config.writeApiKey}`;
         if (sneezes > 0) {
-            const fieldSneezes = getFieldName(5);
+            const fieldSneezes = getFieldName(1);
             url += `&${fieldSneezes}=${sneezes}`;
         }
         if (runnyNose > 0) {
-            const fieldRunnyNose = getFieldName(6);
+            const fieldRunnyNose = getFieldName(2);
             url += `&${fieldRunnyNose}=${runnyNose}`;
         }
 
